@@ -92,6 +92,23 @@ class JobOut(BaseModel):
     updated_at:       Optional[datetime] = None
 
 
+# ── Applications ──────────────────────────────────────────────────────────────
+
+class ApplicationCreate(BaseModel):
+    full_name:   str       = Field(..., min_length=2, max_length=100)
+    email:       EmailStr
+    phone:       str       = Field(..., min_length=7, max_length=20)
+    cover_letter: Optional[str] = Field(None, max_length=2000)
+    resume_link: Optional[str]  = Field(None, max_length=500)
+    years_of_experience: Optional[int] = Field(None, ge=0, le=60)
+
+class ApplicationStatus(str, Enum):
+    pending     = "pending"
+    reviewed    = "reviewed"
+    shortlisted = "shortlisted"
+    rejected    = "rejected"
+
+
 # ── Search ────────────────────────────────────────────────────────────────────
 
 class JobSearchParams(BaseModel):
